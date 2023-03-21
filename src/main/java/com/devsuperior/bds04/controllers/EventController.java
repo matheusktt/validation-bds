@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -26,7 +27,7 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> insert(@RequestBody EventDTO dto) {
+    public ResponseEntity<EventDTO> insert(@Valid @RequestBody EventDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
